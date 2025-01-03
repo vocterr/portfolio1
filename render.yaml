@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    dockerfilePath: Dockerfile # Path to your Dockerfile
+    buildCommand: "" # Leave empty since Dockerfile handles it
+    startCommand: "" # Leave empty if CMD is defined in Dockerfile
+    plan: free # Use 'free' for testing; upgrade for production
+    envVars:
+      - key: DATABASE_URL
+        value: postgres://user:password@db:5432/dbname # Update with your database URL
+  - type: database
+    name: portfolio-database
+    plan: free
+    databaseType: postgresql
+    startCommand: ""
