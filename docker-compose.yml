@@ -20,7 +20,7 @@ services:
       "
 
   database:
-    image: postgres:17 # Use PostgreSQL 15 as the database image
+    image: postgres:16 # Use PostgreSQL 15 as the database image
     environment:
       POSTGRES_USER: database_r99c_user
       POSTGRES_PASSWORD: rIbKNv9bEWecjD5cvmnZzpJERB7M0PX7
