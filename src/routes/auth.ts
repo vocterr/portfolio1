@@ -19,8 +19,19 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
         if (!isMatch) return res.status(400).json({error: "Invalid credentials"});
 
         const token = jwt.sign({userId: user.id}, "1234");
-        res.cookie("token", token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 365 * 10, sameSite: "none", secure: true, path: "/"});
-        res.cookie("loggedIn", "yes", { maxAge: 1000 * 60 * 60 * 24 * 365 * 10, sameSite: "none", secure: true, path: "/"});
+        res.cookie("token", token, {
+            httpOnly: true, // Only accessible by the server
+            secure: true, // Requires HTTPS
+            sameSite: "none", // Needed for cross-origin requests
+            maxAge: 1000 * 60 * 60 * 24 * 365, // Expiry time
+        });
+        
+        res.cookie("loggedIn", "yes", {
+            httpOnly: false,
+            secure: true, // Requires HTTPS
+            sameSite: "none", // Needed for cross-origin requests
+            maxAge: 1000 * 60 * 60 * 24 * 365, // Expiry time
+        });
         res.json(token);
     }
     catch(error) {
