@@ -23,14 +23,14 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
-            sameSite: "lax",
+            sameSite: "none",
             maxAge: 1000 * 60 * 60 * 24 * 365,
         });
 
         res.cookie("loggedIn", "yes", {
             httpOnly: false,
             secure: true,
-            sameSite: "lax",
+            sameSite: "none",
             maxAge: 1000 * 60 * 60 * 24 * 365,
         });
 
