@@ -7,7 +7,7 @@ WORKDIR /src
 # Copy package.json and package-lock.json to install dependencies
 COPY package*.json ./
 
-ENV DATABASE_URL="postgresql://myuser:1234@database:5432/mydb?schema=public"
+ENV DATABASE_URL="postgresql://database_r99c_user:rIbKNv9bEWecjD5cvmnZzpJERB7M0PX7@dpg-ctssuhdds78s73cimacg-a.oregon-postgres.render.com/database_r99c"
 
 # Install dependencies
 RUN npm install
