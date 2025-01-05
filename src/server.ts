@@ -23,6 +23,12 @@ app.use(cors({
     origin: "https://portfolio1frontend.vercel.app",
     credentials: true
 }));
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://portfolio1frontend.vercel.app");
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
 
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
