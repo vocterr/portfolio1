@@ -15,6 +15,7 @@ services:
       - database # Wait for the database service to be ready
     command: >
       sh -c "
+      npx prisma generate --schema=./src/prisma/schema.prisma &&
       npx prisma migrate deploy --schema=./src/prisma/schema.prisma &&
       npm run start
       "
