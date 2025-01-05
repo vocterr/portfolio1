@@ -13,7 +13,7 @@ router.patch("/user", authenticate, upload.single("image"), async (req: AuthRequ
 
     try {
 
-        const profilePicture = req.file ? `http://localhost:3001/uploads/${req.file.filename}` : undefined;
+        const profilePicture = req.file ? `https://portfolio-backend-b3ej.onrender.com/uploads/${req.file.filename}` : undefined;
         const updatedUser = await prisma.user.update({
             data: {
                 name,
