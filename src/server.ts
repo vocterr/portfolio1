@@ -15,6 +15,7 @@ import settingRoutes from "./routes/settings";
 const app = express();
 
 app.use("/uploads", express.static(path.join(__dirname, "images")));
+app.set("trust proxy", 1);
 
 app.use(express.json());
 app.use(cookieParser());
