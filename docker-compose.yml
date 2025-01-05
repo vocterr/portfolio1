@@ -10,7 +10,7 @@ services:
       - .:/src
       - /src/node_modules
     environment:
-      DATABASE_URL: "postgresql://myuser:1234@database:5432/mydb?schema=public" # Match the database service
+      DATABASE_URL: "postgresql://database_r99c_user:rIbKNv9bEWecjD5cvmnZzpJERB7M0PX7@dpg-ctssuhdds78s73cimacg-a.oregon-postgres.render.com/database_r99c" # Match the database service
     depends_on:
       - database # Wait for the database service to be ready
     command: >
@@ -22,8 +22,8 @@ services:
   database:
     image: postgres:17 # Use PostgreSQL 15 as the database image
     environment:
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: 1234
-      POSTGRES_DB: mydb
+      POSTGRES_USER: database_r99c_user
+      POSTGRES_PASSWORD: rIbKNv9bEWecjD5cvmnZzpJERB7M0PX7
+      POSTGRES_DB: database_r99c
     ports:
       - "5432:5432" # Expose PostgreSQL on port 5432
