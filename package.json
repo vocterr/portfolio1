@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "npx nodemon src/server.ts",
-    "start": "ts-node src/server.ts"
+    "start": "npx ts-node src/server.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^8.0.2",

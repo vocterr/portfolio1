@@ -5,6 +5,23 @@ import prisma from "../prisma/prisma";
 
 const router = Router();
 
+router.get("/recentNotifications", authenticate, async (req: AuthRequest, res: Response) => {
+    const userId = req.user?.userId;
+    try {
+        const recentNotifications = await prisma.notification.findMany({
+            where: {
+                userId: String(userId)
+            },
+            take: 3
+        });
+        res.json(recentNotifications);
+    }
+    catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Server error"});
+    }
+});
+
 
 router.get("/notifications", authenticate, async (req: AuthRequest, res: Response) => {
     const userId = req.user?.userId;

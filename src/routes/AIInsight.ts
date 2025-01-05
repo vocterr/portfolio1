@@ -42,7 +42,7 @@ router.get("/recentAIInsights", authenticate, async (req: AuthRequest, res: Resp
     }
 });
 
-
+/*
 
 cron.schedule("* * * * *", async () => {
   console.log("Running scheduled AI insight generation...");
@@ -114,10 +114,14 @@ router.post("/createinsight", authenticate, async (req: AuthRequest, res: Respon
       
           await prisma.aIInsight.create({
             data: {
-              userId: user.id,
               type: "FORECAST",
               content,
               relevance,
+              user: {
+                connect: {
+                  id: String(user.id)
+                }
+              }
             },
           });
       
@@ -133,6 +137,6 @@ router.post("/createinsight", authenticate, async (req: AuthRequest, res: Respon
     console.error("Error generating AI insights:", error);
   }
 });
-
+*/
 
 export default router;

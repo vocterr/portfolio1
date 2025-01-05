@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors"
+import path from "path";
 import cookieParser from "cookie-parser";
 import userRoutes from "./routes/user";
 import authRoutes from "./routes/auth";
@@ -12,6 +13,8 @@ import notificationRoutes from "./routes/notification";
 import auditLogsRoutes from "./routes/auditLogs";
 import settingRoutes from "./routes/settings";
 const app = express();
+
+app.use("/uploads", express.static(path.join(__dirname, "images")));
 
 app.use(express.json());
 app.use(cookieParser());

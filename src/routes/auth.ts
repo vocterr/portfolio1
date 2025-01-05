@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import prisma from "../prisma/prisma";
 import jwt from "jsonwebtoken"
+import { authenticate, AuthRequest } from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -19,12 +20,44 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
 
         const token = jwt.sign({userId: user.id}, "1234");
         res.cookie("token", token, {httpOnly: true, maxAge: 1000 * 60 * 60 * 24 * 365 * 10});
+        res.cookie("loggedIn", "yes", { maxAge: 1000 * 60 * 60 * 24 * 365 * 10 });
         res.json(token);
     }
     catch(error) {
         console.error(error);
         res.status(500).json({error: "Server error"});
     }
+});
+
+
+router.post("/register", async (req: Request, res: Response): Promise<any> => {
+    const {name, email, password} = req.body;
+    try {
+        const userExists = await prisma.user.findUnique({
+            where: {
+                email
+            }
+        });
+        if (userExists) return res.status(400).json({error: "User already exists"});
+        const user = await prisma.user.create({
+            data: {
+                name,
+                email,
+                password
+            }
+        });
+        res.json(user);
+    }
+    catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Server error"});
+    }
+});
+
+router.post("/logout", async (req: AuthRequest, res: Response) => {
+    res.clearCookie("token");
+    res.clearCookie("loggedIn");
+    res.json("Logged out successfully!");
 });
 
 

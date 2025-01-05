@@ -20,6 +20,27 @@ router.get("/settings", authenticate, async (req: AuthRequest, res: Response) =>
     }
 });
 
+router.post("/settings", authenticate, async (req: AuthRequest, res: Response) => {
+    const userId = req.user?.userId;
+    try {
+        const settings = await prisma.settings.create({
+            data: {
+                userId: String(userId),
+                notificationPreferences: {
+                    email: true,
+                    sms: true,
+                    push: true
+                }
+            }
+        });
+        res.json(settings);
+    }
+    catch(error) {
+        console.error(error);
+        res.status(500).json({error: "Server error"});
+    }
+});
+
 router.patch("/settings", authenticate, async (req: AuthRequest, res: Response) => {
     const userId = req.user?.userId;
     const {settings} = req.body;

@@ -1,23 +1,29 @@
 version: '3.8'
-
 services:
+  backend:
+    build:
+      context: .
+    ports:
+      - "3001:3001"
+      - "5555:5555"
+    volumes:
+      - .:/src
+      - /src/node_modules
+    environment:
+      DATABASE_URL: "postgresql://myuser:1234@database:5432/mydb?schema=public" # Match the database service
+    depends_on:
+      - database # Wait for the database service to be ready
+    command: >
+      sh -c "
+      npx prisma migrate deploy --schema=./src/prisma/schema.prisma &&
+      npm run dev
+      "
+
   database:
-    image: postgres:latest
-    container_name: postgres_db
+    image: postgres:17 # Use PostgreSQL 15 as the database image
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: 1234
       POSTGRES_DB: mydb
     ports:
-      - "5432:5432"
-
-  app:
-    build:
-      context: .
-    container_name: tensorflow_app
-    environment:
-      DATABASE_URL: postgresql://myuser:1234@database:5432/mydb?schema=public
-    ports:
-      - "3001:3001"
-    depends_on:
-      - database
+      - "5432:5432" # Expose PostgreSQL on port 5432

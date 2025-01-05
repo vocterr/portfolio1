@@ -6,6 +6,7 @@ import { Account } from "@prisma/client";
 const router = Router();
 
 
+
 router.post("/account", authenticate, async (req: AuthRequest, res: Response) => {
     const userId = req.user?.userId;
     const {account} = req.body;
