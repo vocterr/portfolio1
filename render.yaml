@@ -8,4 +8,4 @@ services:
     plan: free # Use 'free' for testing; upgrade for production
     envVars:
       - key: DATABASE_URL
-        value: postgres://myuser:1234@database:5432/mydb?schema=public # Update this with your actual database connection string
+        value: postgresql://database_r99c_user:rIbKNv9bEWecjD5cvmnZzpJERB7M0PX7@dpg-ctssuhdds78s73cimacg-a.oregon-postgres.render.com/database_r99c # Update this with your actual database connection string
