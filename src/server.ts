@@ -20,7 +20,7 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://portfolio1frontend-1ih9ebglt-vocterrs-projects.vercel.app",
     credentials: true
 }));
 
