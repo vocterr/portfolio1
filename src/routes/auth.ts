@@ -6,39 +6,44 @@ import { authenticate, AuthRequest } from "../middleware/authMiddleware";
 const router = Router();
 
 router.post("/login", async (req: Request, res: Response): Promise<any> => {
-    const {email, password}  = req.body;
+    const { email, password } = req.body;
     try {
         const user = await prisma.user.findFirst({
-            where: {
-                email
-            }
+            where: { email },
         });
-        if (!user)  return res.status(404).json({error: "User doesnt exist"});
-        const isMatch = user.password == password ? true : false
 
-        if (!isMatch) return res.status(400).json({error: "Invalid credentials"});
+        if (!user) return res.status(404).json({ error: "User doesn't exist" });
 
-        const token = jwt.sign({userId: user.id}, "1234");
+        const isMatch = user.password === password;
+        if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
+
+        const token = jwt.sign({ userId: user.id }, "1234");
+
+        // Set cookies
         res.cookie("token", token, {
-            httpOnly: true, // Only accessible by the server
-            secure: true, // Requires HTTPS
-            sameSite: "lax", // Needed for cross-origin requests
-            maxAge: 1000 * 60 * 60 * 24 * 365, // Expiry time
+            httpOnly: true,
+            secure: true,
+            sameSite: "lax",
+            maxAge: 1000 * 60 * 60 * 24 * 365,
         });
-        
+
         res.cookie("loggedIn", "yes", {
             httpOnly: false,
-            secure: true, // Requires HTTPS
-            sameSite: "lax", // Needed for cross-origin requests
-            maxAge: 1000 * 60 * 60 * 24 * 365, // Expiry time
+            secure: true,
+            sameSite: "lax",
+            maxAge: 1000 * 60 * 60 * 24 * 365,
         });
-        res.json(token);
-    }
-    catch(error) {
-        console.error(error);
-        res.status(500).json({error: "Server error"});
+
+        // Log cookies for debugging
+        console.log("Set-Cookie headers:", res.getHeaders()["set-cookie"]);
+
+        res.json({ token, message: "Login successful" });
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).json({ error: "Server error" });
     }
 });
+
 
 
 router.post("/register", async (req: Request, res: Response): Promise<any> => {
