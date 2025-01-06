@@ -17,7 +17,7 @@ router.post("/login", async (req: Request, res: Response): Promise<any> => {
         const isMatch = user.password === password;
         if (!isMatch) return res.status(400).json({ error: "Invalid credentials" });
 
-        const token = jwt.sign({ userId: user.id }, "1234");
+        const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string);
 
         // Set cookies
         res.cookie("token", token, {

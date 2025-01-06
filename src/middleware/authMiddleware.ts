@@ -10,7 +10,7 @@ export const authenticate =  (req: AuthRequest, res: Response, next: NextFunctio
     const token = req.cookies.token;
     if(!token) res.status(404).json({error: "NO TOKEN"});
 
-    jwt.verify(token, "1234", (err: any, user: any) => {
+    jwt.verify(token, process.env.JWT_SECRET as string, (err: any, user: any) => {
         if (err) return res.status(400).json(err);
         req.user = user;
         next();
