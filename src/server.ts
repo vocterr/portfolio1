@@ -20,7 +20,7 @@ app.set("trust proxy", 1);
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: "https://portfolio1frontend-vocterrs-projects.vercel.app",
+    origin: "https://portfolio1frontend.vercel.app",
     credentials: true, // This ensures cookies are passed along
 }));
 
